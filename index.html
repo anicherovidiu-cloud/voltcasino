@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>VoltCasino Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { margin:0; font-family: Arial, sans-serif; background:#0a0e1a; color:#fff; }
+    header { background:#0f1426; padding:20px; display:flex; justify-content:space-between; align-items:center; }
+    .logo { font-size:28px; font-weight:bold; color:#ffd700; }
+    .btn { background:#ffd700; color:black; padding:10px 20px; border-radius:6px; text-decoration:none; font-weight:bold; margin-left:10px; cursor:pointer; }
+    .hero { text-align:center; padding:40px 20px; }
+    h1 { font-size:36px; margin-bottom:10px; }
+    p { opacity:0.8; font-size:18px; }
+    .games { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; margin-top:40px; }
+    .game { background:#161b33; padding:20px; border-radius:10px; text-align:center; width:200px; cursor:pointer; }
+    .game:hover { transform:scale(1.05); background:#1f2550; transition:0.3s; }
+    .balance { text-align:center; margin-top:20px; font-size:20px; }
+    footer { text-align:center; padding:20px; opacity:0.5; font-size:14px; margin-top:40px; }
+    button { font-weight:bold; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">⚡ VoltCasino</div>
+  <div>
+    <button class="btn" onclick="alert('Login пока недоступен')">Login</button>
+    <button class="btn" onclick="alert('Register пока недоступен')">Register</button>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>Добро пожаловать в VoltCasino!</h1>
+  <p>Виртуальные игры и ставки прямо в браузере</p>
+</section>
+
+<div class="balance">Баланс: <span id="balance">1000</span> монет</div>
+
+<section class="games">
+  <div class="game" onclick="playSlot()">🎰 Слоты</div>
+  <div class="game" onclick="playRoulette()">👑 Рулетка</div>
+</section>
+
+<footer>
+  © 2026 VoltCasino Demo. Нет реальных денег.
+</footer>
+
+<script>
+let balance = 1000;
+function updateBalance() {
+  document.getElementById('balance').textContent = balance;
+}
+
+// Слоты
+function playSlot() {
+  if(balance<50){ alert('Недостаточно монет'); return; }
+  balance -=50;
+  const symbols = ['🍒','🍋','🍊','⭐','7️⃣'];
+  const result = Array.from({length:3}, ()=> symbols[Math.floor(Math.random()*symbols.length)]);
+  alert('Результат: '+result.join(' | '));
+  if(result[0]===result[1] && result[1]===result[2]){
+    const win = 200;
+    alert('Вы выиграли '+win+' монет!');
+    balance += win;
+  }
+  updateBalance();
+}
+
+// Рулетка
+function playRoulette() {
+  if(balance<100){ alert('Недостаточно монет'); return; }
+  balance -=100;
+  const number = Math.floor(Math.random()*37);
+  const color = number===0?'зелёный': number%2===0?'чёрный':'красный';
+  alert('Выпало: '+number+' ('+color+')');
+  const bet = prompt('Ставка на цвет (красный/чёрный/зелёный):');
+  if(bet && bet.toLowerCase()===color){
+    const win = 300;
+    alert('Вы выиграли '+win+' монет!');
+    balance += win;
+  }
+  updateBalance();
+}
+</script>
+
+</body>
+</html>
